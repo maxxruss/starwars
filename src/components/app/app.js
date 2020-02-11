@@ -4,26 +4,22 @@ import Header from "../header";
 // import Itemlist from "../item-list";
 // import PersonalDetails from "../person-details";
 // import PlanetDetails from "../planet-details";
-// import RandomPlanet from "../random-planet";
+import RandomPlanet from "../random-planet";
 // import StarShipDetails from "../starship-details";
-
 import CssBaseline from "@material-ui/core/CssBaseline";
-
 import Container from "@material-ui/core/Container";
 
-const styles = {
+const useStyles = {
   root: {
     display: "flex",
-    flexDirection: "column",
+    // flexDirection: "column",
     background: "black",
     height: "100%"
   },
-  paper: {
-    marginTop: "8px",
-    display: "flex",
-    backgroundColor: "#171616",
+  headerWrap: {
+    marginTop: "50px",
+    display: "flex"
   },
-
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: "1px"
@@ -39,15 +35,14 @@ class App extends Component {
 
     return (
       <div className={classes.root}>
-        <Container component="main">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Header />
-          </div>
+        <CssBaseline />
+        <Container maxWidth="lg">
+            <Header/>
+            <RandomPlanet/>
         </Container>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(App);
+export default withStyles(useStyles)(App);
