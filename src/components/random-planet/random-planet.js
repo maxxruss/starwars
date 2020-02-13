@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SwapiService from "../../services/swapi-service";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
@@ -11,7 +12,8 @@ const useStyles = {
     backgroundColor: "#2f2d2d",
     height: "250px",
     borderRadius: "10px",
-    padding: "20px"
+    padding: "20px",
+    marginBottom: "20px"
   },
   image: {
     width: "200px",
@@ -23,7 +25,6 @@ const useStyles = {
   info: {
     display: "flex",
     flexDirection: "column"
-    // width: '200px',
     // height: '200px',
     // backgroundColor: "green",
   },
@@ -39,26 +40,52 @@ const useStyles = {
 };
 
 class RandomPlanet extends Component {
+  swapiService = new SwapiService();
+
+  state = {
+    name: null,
+    population: null,
+    rotationPeriod: null,
+    diameter: null
+  };
+
+  constructor() {
+    super();
+    this.updatePlanet();
+  }
+
+  updatePlanet() {
+    this.swapiService(7).then(planet => {
+      this.setState({
+        name: planet.name,
+        population: planet.population,
+        rotationPeriod: planet.rotation_period,
+        diameter: planet.diameter
+      });
+    });
+  }
+
   render() {
     const { classes } = this.props;
+    const { name, population, rotationPeriod, diameter } = this.state;
     return (
       <div className={classes.root}>
         <div className={classes.image}></div>
         <div className={classes.info}>
           <Typography variant="h3" className={classes.planetTitle}>
-            Mustafar
+            {name}
           </Typography>
           <List>
             <ListItem className={classes.planetItemtext}>
-              population 20000
+              population {population}
             </ListItem>
             <Divider className={classes.divider} />
             <ListItem className={classes.planetItemtext}>
-              Rotation period 36
+              Rotation period {rotationPeriod}
             </ListItem>
             <Divider className={classes.divider} />
             <ListItem className={classes.planetItemtext}>
-              Diameter 4200
+              Diameter {diameter}
             </ListItem>
           </List>
         </div>
