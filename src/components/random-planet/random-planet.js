@@ -18,7 +18,7 @@ const useStyles = {
   image: {
     width: "200px",
     height: "200px",
-    backgroundColor: "green",
+    // backgroundColor: "green",
     borderRadius: "10px",
     marginRight: "50px"
   },
@@ -43,10 +43,7 @@ class RandomPlanet extends Component {
   swapiService = new SwapiService();
 
   state = {
-    name: null,
-    population: null,
-    rotationPeriod: null,
-    diameter: null
+    planet: {}
   };
 
   constructor() {
@@ -54,23 +51,31 @@ class RandomPlanet extends Component {
     this.updatePlanet();
   }
 
+  onPlanetLoaded = planet => {
+    // console.log(planet)
+    this.setState({ planet });
+  };
+
   updatePlanet() {
-    this.swapiService(7).then(planet => {
-      this.setState({
-        name: planet.name,
-        population: planet.population,
-        rotationPeriod: planet.rotation_period,
-        diameter: planet.diameter
-      });
-    });
+    const id = Math.floor(Math.random() * 25 + 2);
+    this.swapiService.getPlanet(id).then(this.onPlanetLoaded);
   }
 
   render() {
     const { classes } = this.props;
-    const { name, population, rotationPeriod, diameter } = this.state;
+    const {
+      planet: { id, name, population, rotationPeriod, diameter }
+    } = this.state;
+    // setTimeout(() => {
+    //   updatePlanet
+    // }, 3000);
     return (
       <div className={classes.root}>
-        <div className={classes.image}></div>
+        <img
+          className={classes.image}
+          alt="planet"
+          src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+        />
         <div className={classes.info}>
           <Typography variant="h3" className={classes.planetTitle}>
             {name}
