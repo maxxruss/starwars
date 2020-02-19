@@ -5,28 +5,27 @@ import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = {
   root: {
     display: "flex",
-    backgroundColor: "#2f2d2d",
-    height: "250px",
-    borderRadius: "10px",
-    padding: "20px",
-    marginBottom: "20px"
+    loader: {
+      display: "flex",
+      height: "100%",
+      alignItems: "center",
+      justifyContent: "center"
+    }
   },
   image: {
     width: "200px",
     height: "200px",
-    // backgroundColor: "green",
     borderRadius: "10px",
     marginRight: "50px"
   },
   info: {
     display: "flex",
     flexDirection: "column"
-    // height: '200px',
-    // backgroundColor: "green",
   },
   planetTitle: {
     color: "white"
@@ -43,7 +42,8 @@ class RandomPlanet extends Component {
   swapiService = new SwapiService();
 
   state = {
-    planet: {}
+    planet: {},
+    loading: true
   };
 
   constructor() {
@@ -53,7 +53,7 @@ class RandomPlanet extends Component {
 
   onPlanetLoaded = planet => {
     // console.log(planet)
-    this.setState({ planet });
+    this.setState({ planet, loading: false });
   };
 
   updatePlanet() {
@@ -64,8 +64,27 @@ class RandomPlanet extends Component {
   render() {
     const { classes } = this.props;
     const {
-      planet: { id, name, population, rotationPeriod, diameter }
+      planet: { id, name, population, rotationPeriod, diameter },
+      loading
     } = this.state;
+
+    const loaderStyle = {
+      display: "flex",
+      height: "100%",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+
+    if (loading) {
+      return (
+        <React.Fragment>
+        <div></div>
+        <div style={loaderStyle}>
+          <CircularProgress />
+        </div>
+        </React.Fragment>
+      );
+    }
     // setTimeout(() => {
     //   updatePlanet
     // }, 3000);

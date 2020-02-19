@@ -23,13 +23,14 @@ const useStyles = {
     marginTop: "50px",
     display: "flex"
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: "1px"
+  randomPlanetWrap: {
+   backgroundColor: "#2f2d2d",
+    height: "250px",
+    borderRadius: "10px",
+    padding: "20px",
+    marginBottom: "20px"
   },
-  submit: {
-    marginBottom: "15px"
-  },
+
   infoWrap: {
     height: "500px",
     // width: "100%",
@@ -46,7 +47,9 @@ class App extends Component {
         <CssBaseline />
         <Container maxWidth="lg">
           <Header />
+          <div className={classes.randomPlanetWrap}>
           <RandomPlanet />
+          </div>
           <Grid container className={classes.infoWrap} spacing={3}>
             <Grid item sm={12} md={6}>
               <Itemlist></Itemlist>
