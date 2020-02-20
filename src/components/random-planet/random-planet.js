@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Error from "../error";
 import SwapiService from "../../services/swapi-service";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -43,29 +44,43 @@ class RandomPlanet extends Component {
 
   state = {
     planet: {},
-    loading: true
+    loading: true,
+    error: false
   };
 
   constructor() {
     super();
-    this.updatePlanet();
+    setInterval(() => {
+      this.updatePlanet();
+    }, 3000);
   }
+
+  onError = error => {
+    this.setState({
+      error: true,
+      loading: false
+    });
+  };
 
   onPlanetLoaded = planet => {
     // console.log(planet)
     this.setState({ planet, loading: false });
   };
 
-  updatePlanet() {
-    const id = Math.floor(Math.random() * 25 + 2);
-    this.swapiService.getPlanet(id).then(this.onPlanetLoaded);
-  }
+  updatePlanet = () => {
+    const id = Math.floor(Math.random() * 25) + 3;
+    this.swapiService
+      .getPlanet(id)
+      .then(this.onPlanetLoaded)
+      .catch(this.onError);
+  };
 
   render() {
     const { classes } = this.props;
     const {
       planet: { id, name, population, rotationPeriod, diameter },
-      loading
+      loading,
+      error
     } = this.state;
 
     const loaderStyle = {
@@ -77,17 +92,13 @@ class RandomPlanet extends Component {
 
     if (loading) {
       return (
-        <React.Fragment>
-        <div></div>
         <div style={loaderStyle}>
           <CircularProgress />
         </div>
-        </React.Fragment>
       );
     }
-    // setTimeout(() => {
-    //   updatePlanet
-    // }, 3000);
+    if (error) return <Error />;
+
     return (
       <div className={classes.root}>
         <img
