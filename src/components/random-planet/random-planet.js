@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Error from "../error";
+import Spinner from "../spinner"
 import SwapiService from "../../services/swapi-service";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = {
   root: {
@@ -83,20 +83,7 @@ class RandomPlanet extends Component {
       error
     } = this.state;
 
-    const loaderStyle = {
-      display: "flex",
-      height: "100%",
-      alignItems: "center",
-      justifyContent: "center"
-    };
-
-    if (loading) {
-      return (
-        <div style={loaderStyle}>
-          <CircularProgress />
-        </div>
-      );
-    }
+    if (loading) return <Spinner/>    
     if (error) return <Error />;
 
     return (

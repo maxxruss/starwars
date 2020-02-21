@@ -3,37 +3,54 @@ import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import { Divider } from "@material-ui/core";
-// import Divider from "@material-ui/core/Divider";
+import SwapiService from "../../services/swapi-service";
+import Spinner from "../spinner";
 
 const useStyles = {
   root: {
-    // display: "flex",
     backgroundColor: "#2f2d2d",
-    height: "250px",
+    // height: "250px",
     borderRadius: "10px",
     padding: "20px"
   },
   divider: {
     backgroundColor: "grey"
-  }  
+  }
 };
 
 class Itemlist extends Component {
-  render() {
-    const {classes} = this.props;
-    const array = ['Luke Skywalker', 'Darth Vader', 'R2-D2'];
-    const items = array.map(item => {
+  swapiService = new SwapiService();
+  state = {
+    peopleList: null
+  };
+
+  componentDidMount() {
+    this.swapiService.getAllPeople().then(peopleList => {
+      this.setState({ peopleList });
+    });
+  }
+
+  renderItems(arr) {
+    return arr.map(({ id, name }) => {
       return (
-        <div><ListItem button>{item}</ListItem><Divider className={classes.divider}/></div>
+        <List key={id}>
+          <ListItem button onClick={() => this.props.onItemSelected(id)}>
+            {name}
+          </ListItem>
+          <Divider style={useStyles.divider} />
+        </List>
       );
     });
-    return (
-      <div>
-        <List className={classes.root} component="nav" aria-label="main mailbox folders">
-          {items}
-        </List>
-      </div>
-    );
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { peopleList } = this.state;
+
+    if (!peopleList) return <Spinner />;
+    // const array = ["Luke Skywalker", "Darth Vader", "R2-D2"];
+    const items = this.renderItems(peopleList);
+    return <div className={classes.root}>{items}</div>;
   }
 }
 

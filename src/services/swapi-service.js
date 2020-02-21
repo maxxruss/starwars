@@ -44,12 +44,10 @@ export default class SwapiService {
 
   _extractId(item) {
     const idRegExp = /\/([0-9]*)\/$/;
-    // console.log(item.url.match(idRegExp)[1])
     return item.url.match(idRegExp)[1];
   }
 
-  _transformPlanet(planet) {
-        // console.log(planet)
+  _transformPlanet = (planet) => {
 
     return {
       id: this._extractId(planet),
@@ -60,7 +58,7 @@ export default class SwapiService {
     };
   }
 
-  _transformPerson(person) {
+  _transformPerson =(person) => {
     return {
       id: this._extractId(person),
       name: person.name,
@@ -70,7 +68,7 @@ export default class SwapiService {
     };
   }
 
-  _transformStarship(starship) {
+  _transformStarship =(starship) => {
     return {
       id: this._extractId(starship),
       name: starship.name,

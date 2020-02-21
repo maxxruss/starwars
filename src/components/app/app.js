@@ -17,14 +17,14 @@ const useStyles = {
     // flexDirection: "column",
     background: "black",
     height: "100%",
-    color:'white'
+    color: "white"
   },
   headerWrap: {
     marginTop: "50px",
     display: "flex"
   },
   randomPlanetWrap: {
-   backgroundColor: "#2f2d2d",
+    backgroundColor: "#2f2d2d",
     height: "250px",
     borderRadius: "10px",
     padding: "20px",
@@ -32,13 +32,19 @@ const useStyles = {
   },
 
   infoWrap: {
-    height: "500px",
+    // height: "500px",
     // width: "100%",
-    flexGrow: 1,
+    flexGrow: 1
   }
 };
 
 class App extends Component {
+  state = {
+    selectedPerson: null
+  };
+  onPersonSelected = id => {
+    this.setState({ selectedPerson: id });
+  };
   render() {
     const { classes } = this.props;
 
@@ -48,14 +54,14 @@ class App extends Component {
         <Container maxWidth="lg">
           <Header />
           <div className={classes.randomPlanetWrap}>
-          <RandomPlanet />
+            <RandomPlanet />
           </div>
           <Grid container className={classes.infoWrap} spacing={3}>
             <Grid item sm={12} md={6}>
-              <Itemlist></Itemlist>
+              <Itemlist onItemSelected={this.onPersonSelected}></Itemlist>
             </Grid>
             <Grid item sm={12} md={6}>
-              <PersonalDetails></PersonalDetails>
+              <PersonalDetails personId={this.state.selectedPerson}></PersonalDetails>
             </Grid>
           </Grid>
         </Container>
