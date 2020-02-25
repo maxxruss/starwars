@@ -40,7 +40,7 @@ const useStyles = {
 
 class App extends Component {
   state = {
-    selectedPerson: null
+    selectedPerson: 1
   };
   onPersonSelected = id => {
     this.setState({ selectedPerson: id });

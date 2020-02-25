@@ -30,26 +30,28 @@ class Itemlist extends Component {
     });
   }
 
-  renderItems(arr) {
-    return arr.map(({ id, name }) => {
+  render() {
+    const { classes, onItemSelected } = this.props;
+    const { peopleList } = this.state;
+
+    if (!peopleList) return <Spinner />;
+    // const array = ["Luke Skywalker", "Darth Vader", "R2-D2"];
+    const items = peopleList.map(item => {
+      const { id, name } = item;
       return (
         <List key={id}>
-          <ListItem button onClick={() => this.props.onItemSelected(id)}>
+          <ListItem
+            button
+            onClick={() => {
+              onItemSelected(id);
+            }}
+          >
             {name}
           </ListItem>
           <Divider style={useStyles.divider} />
         </List>
       );
     });
-  }
-
-  render() {
-    const { classes } = this.props;
-    const { peopleList } = this.state;
-
-    if (!peopleList) return <Spinner />;
-    // const array = ["Luke Skywalker", "Darth Vader", "R2-D2"];
-    const items = this.renderItems(peopleList);
     return <div className={classes.root}>{items}</div>;
   }
 }
