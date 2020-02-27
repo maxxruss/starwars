@@ -42,17 +42,22 @@ const useStyles = {
 class RandomPlanet extends Component {
   swapiService = new SwapiService();
 
+
   state = {
     planet: {},
     loading: true,
     error: false
   };
 
-  constructor() {
-    super();
-    setInterval(() => {
+  componentDidMount(){
+    this.updatePlanet()
+    this.interval = setInterval(() => {
       this.updatePlanet();
-    }, 3000);
+    }, 10000);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.interval)
   }
 
   onError = error => {
