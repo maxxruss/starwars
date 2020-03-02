@@ -3,52 +3,51 @@
 export default class SwapiService {
   _baseApi = "https://swapi.co/api";
 
-  async getResponse(url) {
+  getResponse = async url => {
     const res = await fetch(`${this._baseApi}${url}`);
     if (!res.ok) {
       throw new Error(`Couldn not received data from ${this._baseApi}${url}`);
     }
     return res.json();
-  }
+  };
 
-  async getPerson(id) {
+  getPerson = async id => {
     const res = await this.getResponse(`/people/${id}`);
     return this._transformPerson(res);
-  }
+  };
 
-  async getAllPeople() {
+  getAllPeople = async () => {
     const res = await this.getResponse("/people/");
     return res.results.map(this._transformPerson);
-  }
+  };
 
-  async getPlanet(id) {
+  getPlanet = async id => {
     const res = await this.getResponse(`/planets/${id}`);
     // console.log(this._transformPlanet(res))
     return this._transformPlanet(res);
-  }
+  };
 
-  async getAllPlanets() {
+  getAllPlanets = async () => {
     const res = await this.getResponse(`/planets/`);
     return res.results.map(this._transformPlanet);
-  }
+  };
 
-  async getStarship(id) {
+  getStarship = async id => {
     const res = await this.getResponse(`/starships/${id}`);
     return this._transformStarship(res);
-  }
+  };
 
-  async getAllStarships() {
+  getAllStarships = async () => {
     const res = await this.getResponse(`/starships/`);
     return res.results.map(this._transformStarship);
-  }
+  };
 
   _extractId(item) {
     const idRegExp = /\/([0-9]*)\/$/;
     return item.url.match(idRegExp)[1];
   }
 
-  _transformPlanet = (planet) => {
-
+  _transformPlanet = planet => {
     return {
       id: this._extractId(planet),
       name: planet.name,
@@ -56,9 +55,9 @@ export default class SwapiService {
       rotationPeriod: planet.rotation_period,
       diameter: planet.diameter
     };
-  }
+  };
 
-  _transformPerson =(person) => {
+  _transformPerson = person => {
     return {
       id: this._extractId(person),
       name: person.name,
@@ -66,9 +65,9 @@ export default class SwapiService {
       birthYear: person.birthYear,
       eyeColor: person.eyeColor
     };
-  }
+  };
 
-  _transformStarship =(starship) => {
+  _transformStarship = starship => {
     return {
       id: this._extractId(starship),
       name: starship.name,
@@ -80,14 +79,5 @@ export default class SwapiService {
       passengers: starship.passengers,
       cargoCapacity: starship.cargoCapacity
     };
-  }
+  };
 }
-
-// const getResponse = new GetResponse();
-// getResponse.getAllPeople().then(response => {
-//   console.log(response);
-// });
-
-// getResponse.getPerson(1).then(response => {
-//   console.log(response);
-// });

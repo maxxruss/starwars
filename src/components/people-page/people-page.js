@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Itemlist from "../item-list";
 import PersonalDetails from "../person-details";
+import ErrorButton from "../error-button";
 import Grid from "@material-ui/core/Grid";
 import Error from "../error";
-import ErrorButton from "../error-button";
+
+import SwapiService from "../../services/swapi-service";
 
 const useStyles = {
   infoWrap: {
@@ -18,11 +20,14 @@ class PeoplePage extends Component {
     selectedPerson: 1
   };
 
+  swapiService = new SwapiService();
+
   onPersonSelected = selectedPerson => {
     this.setState({ selectedPerson });
   };
 
   componentDidCatch(error, info) {
+    // debugger;
     this.setState({ hasError: true });
   }
 
@@ -36,7 +41,10 @@ class PeoplePage extends Component {
     return (
       <Grid container className={classes.infoWrap} spacing={3}>
         <Grid item sm={12} md={6}>
-          <Itemlist onItemSelected={this.onPersonSelected}></Itemlist>
+          <Itemlist
+            getData={this.swapiService.getAllPeople}
+            onItemSelected={this.onPersonSelected}
+          ></Itemlist>
         </Grid>
         <Grid item sm={12} md={6}>
           <PersonalDetails

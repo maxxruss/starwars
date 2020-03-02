@@ -9,7 +9,7 @@ const useStyles = {
   root: {
     backgroundColor: "#2f2d2d",
     // height: "250px",
-    borderRadius: "10px",
+    borderRadius: "10px"
     // padding: "20px"
   },
   divider: {
@@ -20,21 +20,23 @@ const useStyles = {
 class Itemlist extends Component {
   swapiService = new SwapiService();
   state = {
-    peopleList: null
+    itemList: null
   };
 
   componentDidMount() {
-    this.swapiService.getAllPeople().then(peopleList => {
-      this.setState({ peopleList });
+    const { getData } = this.props;
+
+    getData().then(itemList => {
+      this.setState({ itemList });
     });
   }
 
   render() {
     const { classes, onItemSelected } = this.props;
-    const { peopleList } = this.state;
+    const { itemList } = this.state;
 
-    if (!peopleList) return <Spinner />;
-    const items = peopleList.map(item => {
+    if (!itemList) return <Spinner />;
+    const items = itemList.map(item => {
       const { id, name } = item;
       return (
         <List disablePadding key={id}>
@@ -46,7 +48,6 @@ class Itemlist extends Component {
           >
             {name}
           </ListItem>
-          {/* <Divider style={useStyles.divider} /> */}
         </List>
       );
     });

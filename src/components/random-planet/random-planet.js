@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Error from "../error";
-import Spinner from "../spinner"
+import Spinner from "../spinner";
 import SwapiService from "../../services/swapi-service";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -42,22 +42,21 @@ const useStyles = {
 class RandomPlanet extends Component {
   swapiService = new SwapiService();
 
-
   state = {
     planet: {},
     loading: true,
     error: false
   };
 
-  componentDidMount(){
-    this.updatePlanet()
+  componentDidMount() {
+    this.updatePlanet();
     this.interval = setInterval(() => {
       this.updatePlanet();
     }, 10000);
   }
 
-  componentWillUnmount(){
-    clearInterval(this.interval)
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   onError = error => {
@@ -88,7 +87,7 @@ class RandomPlanet extends Component {
       error
     } = this.state;
 
-    if (loading) return <Spinner/>    
+    if (loading) return <Spinner />;
     if (error) return <Error />;
 
     return (

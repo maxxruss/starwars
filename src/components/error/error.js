@@ -5,7 +5,8 @@ export default class Error extends Component {
   render() {
     const errorStyle = {
       display: "flex",
-      height: "100%",
+      // width: "100%",
+      height: "400px",
       alignItems: "center",
       justifyContent: "center"
     };
