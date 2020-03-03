@@ -14,9 +14,26 @@ const useStyles = {
   }
 };
 
+class ErrorBoundry extends Component {
+  state = {
+    hasError: false
+  };
+
+  componentDidCatch(error, info) {
+    // debugger;
+    this.setState({ hasError: true });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <Error />;
+    }
+    return this.props.children;
+  }
+}
+
 class PeoplePage extends Component {
   state = {
-    hasError: false,
     selectedPerson: 1
   };
 
@@ -26,11 +43,6 @@ class PeoplePage extends Component {
     this.setState({ selectedPerson });
   };
 
-  componentDidCatch(error, info) {
-    // debugger;
-    this.setState({ hasError: true });
-  }
-
   render() {
     const { classes } = this.props;
 
@@ -38,20 +50,29 @@ class PeoplePage extends Component {
       return <Error />;
     }
 
+    const itemList = (
+      <Itemlist
+        getData={this.swapiService.getAllPeople}
+        onItemSelected={this.onPersonSelected}
+      >
+        {i => `${i.name} (${i.birthYear})`}
+      </Itemlist>
+    );
+
     return (
       <Grid container className={classes.infoWrap} spacing={3}>
         <Grid item sm={12} md={6}>
-          <Itemlist
-            getData={this.swapiService.getAllPeople}
-            onItemSelected={this.onPersonSelected}
-          ></Itemlist>
+          {itemList}
         </Grid>
-        <Grid item sm={12} md={6}>
-          <PersonalDetails
-            personId={this.state.selectedPerson}
-          ></PersonalDetails>
-          <ErrorButton />
-        </Grid>
+        <ErrorBoundry>
+          <Grid item sm={12} md={6}>
+            <PersonalDetails
+              personId={this.state.selectedPerson}
+            ></PersonalDetails>
+
+            <ErrorButton />
+          </Grid>
+        </ErrorBoundry>
       </Grid>
     );
   }

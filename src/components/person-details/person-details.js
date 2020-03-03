@@ -9,7 +9,8 @@ import Divider from "@material-ui/core/Divider";
 const useStyles = {
   root: {
     display: "flex",
-    backgroundColor: "#2f2d2d",
+    backgroundColor: "#1c1e22",
+    border: "1px black solid",
     borderRadius: "10px",
     padding: "20px",
     marginBottom: "20px"
@@ -49,6 +50,7 @@ class PersonalDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    //Обязательно сравнить предыдущее состояние с настоящим
     if (this.props.personId !== prevProps.personId) {
       this.updatePerson();
     }
@@ -61,7 +63,7 @@ class PersonalDetails extends Component {
     }
     this.swapiService.getPerson(personId).then(person => {
       this.setState({ person });
-      // console.log(person);
+      console.log(person);
     });
     // console.log(personId)
   }
@@ -71,7 +73,7 @@ class PersonalDetails extends Component {
       return <span>Select a person from a list</span>;
     }
     const { classes } = this.props;
-    const {id, name, gender, birth_year, eye_color } = this.state.person;
+    const {id, name, gender, birthYear, eyeColor } = this.state.person;
     return (
       <div className={classes.root}>
         <img
@@ -85,7 +87,7 @@ class PersonalDetails extends Component {
             <ListItem className={classes.planetItemtext}>name {name}</ListItem>
             <Divider className={classes.divider} />
             <ListItem className={classes.planetItemtext}>
-              eyeColor {eye_color}
+              eyeColor {eyeColor}
             </ListItem>
             <Divider className={classes.divider} />
             <ListItem className={classes.planetItemtext}>
@@ -93,7 +95,7 @@ class PersonalDetails extends Component {
             </ListItem>
             <Divider className={classes.divider} />
             <ListItem className={classes.planetItemtext}>
-              birthYear {birth_year}
+              birthYear {birthYear}
             </ListItem>
           </List>
         </div>

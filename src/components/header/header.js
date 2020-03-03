@@ -12,8 +12,10 @@ const useStyles = {
   },
   board: {
     position: "static",
-    backgroundColor: "inherit"
-    // backgroundColor: "#171616",
+    backgroundColor: "#1c1e22",
+    border: "1px black solid",
+    borderRadius: "10px",
+    color: "yellow"
   },
   title: {
     margin: "0 20px"

@@ -7,10 +7,9 @@ import Spinner from "../spinner";
 
 const useStyles = {
   root: {
-    backgroundColor: "#2f2d2d",
-    // height: "250px",
-    borderRadius: "10px"
-    // padding: "20px"
+    backgroundColor: "#1c1e22",
+    borderRadius: "10px",
+    border: "1px black solid",
   },
   divider: {
     backgroundColor: "grey"
@@ -36,8 +35,10 @@ class Itemlist extends Component {
     const { itemList } = this.state;
 
     if (!itemList) return <Spinner />;
+
     const items = itemList.map(item => {
-      const { id, name } = item;
+      const { id } = item;
+      const label = this.props.children(item)
       return (
         <List disablePadding key={id}>
           <ListItem
@@ -46,11 +47,12 @@ class Itemlist extends Component {
               onItemSelected(id);
             }}
           >
-            {name}
+            {label}
           </ListItem>
         </List>
       );
     });
+
     return <div className={classes.root}>{items}</div>;
   }
 }

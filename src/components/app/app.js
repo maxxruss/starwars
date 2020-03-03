@@ -16,7 +16,7 @@ import Container from "@material-ui/core/Container";
 const useStyles = {
   root: {
     display: "flex",
-    background: "black",
+    background: "#272b30",
     height: "100%",
     color: "white"
   },
@@ -25,7 +25,8 @@ const useStyles = {
     display: "flex"
   },
   randomPlanetWrap: {
-    backgroundColor: "#2f2d2d",
+    backgroundColor: "#1c1e22",
+    border: "1px black solid",
     height: "250px",
     borderRadius: "10px",
     padding: "20px",
@@ -57,6 +58,7 @@ class App extends Component {
           <div className={classes.randomPlanetWrap}>
             <RandomPlanet />
           </div>
+
           <PeoplePage />
 
           <Grid container className={classes.infoWrap} spacing={3}>
@@ -64,7 +66,14 @@ class App extends Component {
               <Itemlist
                 getData={this.swapiService.getAllPlanets}
                 onItemSelected={this.onPersonSelected}
-              ></Itemlist>
+                //Рендер функция (паттерн React) - передаем функцию в функцию
+              >
+                {i => (
+                  <span>
+                    {i.name}<button>!</button>
+                  </span>
+                )}
+              </Itemlist>
             </Grid>
             <Grid item sm={12} md={6}>
               <PersonalDetails
@@ -78,7 +87,9 @@ class App extends Component {
               <Itemlist
                 getData={this.swapiService.getAllStarships}
                 onItemSelected={this.onPersonSelected}
-              ></Itemlist>
+              >
+                {i => `${i.name}`}
+              </Itemlist>
             </Grid>
             <Grid item sm={12} md={6}>
               <PersonalDetails
@@ -86,8 +97,6 @@ class App extends Component {
               ></PersonalDetails>
             </Grid>
           </Grid>
-
-
         </Container>
       </div>
     );
