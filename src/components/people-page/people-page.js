@@ -1,36 +1,12 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import Itemlist from "../item-list";
-import PersonalDetails from "../person-details";
+import ItemDetails from "../item-details";
 import ErrorButton from "../error-button";
-import Grid from "@material-ui/core/Grid";
+import ErrorBoundry from "../error-boundry";
+import Row from "../row";
 import Error from "../error";
 
 import SwapiService from "../../services/swapi-service";
-
-const useStyles = {
-  infoWrap: {
-    flexGrow: 1
-  }
-};
-
-class ErrorBoundry extends Component {
-  state = {
-    hasError: false
-  };
-
-  componentDidCatch(error, info) {
-    // debugger;
-    this.setState({ hasError: true });
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <Error />;
-    }
-    return this.props.children;
-  }
-}
 
 class PeoplePage extends Component {
   state = {
@@ -44,8 +20,6 @@ class PeoplePage extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-
     if (this.state.hasError) {
       return <Error />;
     }
@@ -59,23 +33,17 @@ class PeoplePage extends Component {
       </Itemlist>
     );
 
-    return (
-      <Grid container className={classes.infoWrap} spacing={3}>
-        <Grid item sm={12} md={6}>
-          {itemList}
-        </Grid>
-        <ErrorBoundry>
-          <Grid item sm={12} md={6}>
-            <PersonalDetails
-              personId={this.state.selectedPerson}
-            ></PersonalDetails>
+    const personalDetails = (
+      <ItemDetails personId={this.state.selectedPerson}></ItemDetails>
+    );
 
-            <ErrorButton />
-          </Grid>
-        </ErrorBoundry>
-      </Grid>
+    return (
+      <ErrorBoundry>
+        <Row left={itemList} right={personalDetails}></Row>
+        <ErrorButton />
+      </ErrorBoundry>
     );
   }
 }
 
-export default withStyles(useStyles)(PeoplePage);
+export default PeoplePage;

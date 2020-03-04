@@ -39,48 +39,47 @@ const useStyles = {
   }
 };
 
-class PersonalDetails extends Component {
+class ItemDetails extends Component {
   swapiService = new SwapiService();
   state = {
-    person: null
+    item: null,
+    image: null
   };
 
   componentDidMount() {
-    this.updatePerson();
+    this.updateItem();
   }
 
   componentDidUpdate(prevProps) {
     //Обязательно сравнить предыдущее состояние с настоящим
-    if (this.props.personId !== prevProps.personId) {
-      this.updatePerson();
+    if (this.props.itemId !== prevProps.itemId) {
+      this.updateItem();
     }
   }
 
-  updatePerson() {
-    const { personId } = this.props;
-    if (!personId) {
+  updateItem() {
+    const { itemId, getData, getImageUrl } = this.props;
+    if (!itemId) {
       return;
     }
-    this.swapiService.getPerson(personId).then(person => {
-      this.setState({ person });
-      console.log(person);
+    getData(itemId).then(item => {
+      this.setState({ item, image: getImageUrl(item) });
+      console.log(getImageUrl(item));
     });
+
     // console.log(personId)
   }
 
   render() {
-    if (!this.state.person) {
-      return <span>Select a person from a list</span>;
+    if (!this.state.item) {
+      return <span>Select from a list</span>;
     }
+    const { item, image } = this.state;
     const { classes } = this.props;
-    const {id, name, gender, birthYear, eyeColor } = this.state.person;
+    const { name, gender, birthYear, eyeColor } = item;
     return (
       <div className={classes.root}>
-        <img
-          className={classes.image}
-          alt="person"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-        />
+        <img className={classes.image} alt="person" src={image} />
         <div className={classes.info}>
           <Typography variant="h3" className={classes.planetTitle}></Typography>
           <List>
@@ -104,4 +103,4 @@ class PersonalDetails extends Component {
   }
 }
 
-export default withStyles(useStyles)(PersonalDetails);
+export default withStyles(useStyles)(ItemDetails);
