@@ -43,15 +43,15 @@ export default class SwapiService {
     return res.results.map(this._transformStarship);
   };
 
-  getPersonImage = async ({ id }) => {
+  getPersonImage = ({ id }) => {    
     return `${this._imageBase}/characters/${id}.jpg`;
   };
 
-  getPlanetImage = async ({ id }) => {
+  getPlanetImage = ({ id }) => {
     return `${this._imageBase}/planets/${id}.jpg`;
   };
 
-  getStarshipImage = async ({ id }) => {
+  getStarshipImage = ({ id }) => {
     return `${this._imageBase}/starships/${id}.jpg`;
   };
 

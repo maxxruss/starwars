@@ -39,6 +39,31 @@ const useStyles = {
   }
 };
 
+const Record = ({ item, label, field }) => {
+  const useStyles = {
+    planetTitle: {
+      color: "white"
+    },
+    planetItemtext: {
+      color: "white"
+    },
+    divider: {
+      backgroundColor: "grey"
+    }
+  };
+
+  return (
+    <div>
+      <ListItem className={useStyles.planetItemtext}>
+        {label} {item.field}
+      </ListItem>
+      <Divider className={useStyles.divider} />
+    </div>
+  );
+};
+
+export { Record };
+
 class ItemDetails extends Component {
   swapiService = new SwapiService();
   state = {
@@ -64,7 +89,7 @@ class ItemDetails extends Component {
     }
     getData(itemId).then(item => {
       this.setState({ item, image: getImageUrl(item) });
-      console.log(getImageUrl(item));
+      // console.log(getImageUrl(item));
     });
 
     // console.log(personId)
@@ -75,28 +100,19 @@ class ItemDetails extends Component {
       return <span>Select from a list</span>;
     }
     const { item, image } = this.state;
+    // const { name, gender, birthYear, eyeColor } = item;
     const { classes } = this.props;
-    const { name, gender, birthYear, eyeColor } = item;
+
     return (
       <div className={classes.root}>
         <img className={classes.image} alt="person" src={image} />
         <div className={classes.info}>
           <Typography variant="h3" className={classes.planetTitle}></Typography>
-          <List>
-            <ListItem className={classes.planetItemtext}>name {name}</ListItem>
-            <Divider className={classes.divider} />
-            <ListItem className={classes.planetItemtext}>
-              eyeColor {eyeColor}
-            </ListItem>
-            <Divider className={classes.divider} />
-            <ListItem className={classes.planetItemtext}>
-              gender {gender}
-            </ListItem>
-            <Divider className={classes.divider} />
-            <ListItem className={classes.planetItemtext}>
-              birthYear {birthYear}
-            </ListItem>
-          </List>
+    <List>{
+      React.Children.map(this.props.children, (child)=>{
+        return React.cloneElement(child, {item})
+      })
+      }</List>
         </div>
       </div>
     );

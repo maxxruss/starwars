@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 // import Grid from "@material-ui/core/Grid";
 // import Itemlist from "../item-list";
-import ItemDetails from "../item-details";
+import ItemDetails, { Record } from "../item-details";
 import Row from "../row";
 import ErrorBoundry from "../error-boundry";
 import SwapiService from "../../services/swapi-service";
@@ -60,11 +60,10 @@ class App extends Component {
     } = this.swapiService;
 
     const personalDetail = (
-      <ItemDetails
-        itemId={11}
-        getData={getPerson}
-        getImageUrl={getPersonImage}
-      ></ItemDetails>
+      <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
+        <Record field="gender" label="gender"></Record>
+        <Record field="eyeColor" label="Eye Color"></Record>
+      </ItemDetails>
     );
 
     const starshipDetail = (
@@ -72,7 +71,11 @@ class App extends Component {
         itemId={5}
         getData={getStarship}
         getImageUrl={getStarshipImage}
-      ></ItemDetails>
+      >
+        <Record field="model" label="Model"></Record>
+        <Record field="length" label="Length"></Record>
+        <Record field="costInCredits" label="Cost"></Record>
+      </ItemDetails>
     );
 
     return (
