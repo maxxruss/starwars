@@ -1,60 +1,52 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner";
+import { withData } from "../hoc-helpers";
 
-const useStyles = {
+const useStyles = makeStyles({
   root: {
     backgroundColor: "#1c1e22",
     borderRadius: "10px",
-    border: "1px black solid",
+    border: "1px black solid"
   },
   divider: {
     backgroundColor: "grey"
   }
+});
+
+const Itemlist = props => {
+  // swapiService = new SwapiService();
+  // state = {
+  //   itemList: null// };
+
+  const classes = useStyles(props);
+  const { data, onItemSelected, children: renderLabel } = this.props;
+  if (!data) return <Spinner />;
+
+  const items = data.map(item => {
+    const { id } = item;
+    const label = renderLabel(item);
+
+    return (
+      <List disablePadding key={id}>
+        <ListItem
+          button
+          onClick={() => {
+            onItemSelected(id);
+          }}
+        >
+          {label}
+        </ListItem>
+      </List>
+    );
+  });
+
+  return <div className={classes.root}>{items}</div>;
 };
 
-class Itemlist extends Component {
-  swapiService = new SwapiService();
-  state = {
-    itemList: null
-  };
+const { getAllPeople } = new SwapiService();
 
-  componentDidMount() {
-    const { getData } = this.props;
-
-    getData().then(itemList => {
-      this.setState({ itemList });
-    });
-  }
-
-  render() {
-    const { classes, onItemSelected } = this.props;
-    const { itemList } = this.state;
-
-    if (!itemList) return <Spinner />;
-
-    const items = itemList.map(item => {
-      const { id } = item;
-      const label = this.props.children(item)
-      return (
-        <List disablePadding key={id}>
-          <ListItem
-            button
-            onClick={() => {
-              onItemSelected(id);
-            }}
-          >
-            {label}
-          </ListItem>
-        </List>
-      );
-    });
-
-    return <div className={classes.root}>{items}</div>;
-  }
-}
-
-export default withStyles(useStyles)(Itemlist);
+export default withData(Itemlist, getAllPeople);

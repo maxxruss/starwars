@@ -108,11 +108,11 @@ class ItemDetails extends Component {
         <img className={classes.image} alt="person" src={image} />
         <div className={classes.info}>
           <Typography variant="h3" className={classes.planetTitle}></Typography>
-    <List>{
-      React.Children.map(this.props.children, (child)=>{
-        return React.cloneElement(child, {item})
-      })
-      }</List>
+          <List>
+            {React.Children.map(this.props.children, child => {
+              return React.cloneElement(child, { item });
+            })}
+          </List>
         </div>
       </div>
     );
