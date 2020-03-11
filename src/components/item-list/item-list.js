@@ -2,9 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import SwapiService from "../../services/swapi-service";
-import Spinner from "../spinner";
-import { withData } from "../hoc-helpers";
+// import SwapiService from "../../services/swapi-service";
+// import Spinner from "../spinner";
+// import { withData } from "../hoc-helpers";
 
 const useStyles = makeStyles({
   root: {
@@ -18,13 +18,8 @@ const useStyles = makeStyles({
 });
 
 const Itemlist = props => {
-  // swapiService = new SwapiService();
-  // state = {
-  //   itemList: null// };
-
   const classes = useStyles(props);
-  const { data, onItemSelected, children: renderLabel } = this.props;
-  if (!data) return <Spinner />;
+  const { data, onItemSelected, children: renderLabel } = props;
 
   const items = data.map(item => {
     const { id } = item;
@@ -47,6 +42,4 @@ const Itemlist = props => {
   return <div className={classes.root}>{items}</div>;
 };
 
-const { getAllPeople } = new SwapiService();
-
-export default withData(Itemlist, getAllPeople);
+export default Itemlist;

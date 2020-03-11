@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-
-// import Grid from "@material-ui/core/Grid";
-// import Itemlist from "../item-list";
-import ItemDetails, { Record } from "../item-details";
-import Row from "../row";
+// import ItemDetails, { Record } from "../item-details";
+// import Row from "../row";
 import ErrorBoundry from "../error-boundry";
-import SwapiService from "../../services/swapi-service";
-
+// import SwapiService from "../../services/swapi-service";
 import Header from "../header";
-// import PeoplePage from "../people-page";
 import RandomPlanet from "../random-planet";
 import Error from "../error";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
+import {
+  PersonList,
+  PlanetList,
+  StarshipList,
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails
+} from "../sw-components";
 
 const useStyles = {
   root: {
@@ -41,7 +44,7 @@ class App extends Component {
     hasError: false
   };
 
-  swapiService = new SwapiService();
+  // swapiService = new SwapiService();
 
   componentDidCatch() {
     this.setState({ hasError: true });
@@ -52,31 +55,20 @@ class App extends Component {
     }
     const { classes } = this.props;
 
-    const {
-      getPerson,
-      getStarship,
-      getPersonImage,
-      getStarshipImage
-    } = this.swapiService;
+    // const {
+    //   getPerson,
+    //   getStarship,
+    //   getPersonImage,
+    //   getStarshipImage
+    // } = this.swapiService;
 
-    const personalDetail = (
-      <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
-        <Record field="gender" label="gender"></Record>
-        <Record field="eyeColor" label="Eye Color"></Record>
-      </ItemDetails>
-    );
+    // const personalDetail = (
+     
+    // );
 
-    const starshipDetail = (
-      <ItemDetails
-        itemId={5}
-        getData={getStarship}
-        getImageUrl={getStarshipImage}
-      >
-        <Record field="model" label="Model"></Record>
-        <Record field="length" label="Length"></Record>
-        <Record field="costInCredits" label="Cost"></Record>
-      </ItemDetails>
-    );
+    // const starshipDetail = (
+     
+    // );
 
     return (
       <div className={classes.root}>
@@ -87,42 +79,12 @@ class App extends Component {
             <div className={classes.randomPlanetWrap}>
               <RandomPlanet />
             </div>
-            <Row left={personalDetail} right={starshipDetail}></Row>
-            {/* <PeoplePage /> */}
-
-            {/* <Grid container className={classes.infoWrap} spacing={3}>
-              <Grid item sm={12} md={6}>
-                <Itemlist
-                  getData={this.swapiService.getAllPlanets}
-                  onItemSelected={this.onPersonSelected}
-                  //Рендер функция (паттерн React) - передаем функцию в функцию
-                >
-                  {i => (
-                    <span>
-                      {i.name}
-                      <button>!</button>
-                    </span>
-                  )}
-                </Itemlist>
-              </Grid>
-              <Grid item sm={12} md={6}>
-                <ItemDetails personId={this.state.selectedPerson}></ItemDetails>
-              </Grid>
-            </Grid> */}
-
-            {/* <Grid container className={classes.infoWrap} spacing={3}>
-              <Grid item sm={12} md={6}>
-                <Itemlist
-                  getData={this.swapiService.getAllStarships}
-                  onItemSelected={this.onPersonSelected}
-                >
-                  {i => `${i.name}`}
-                </Itemlist>
-              </Grid>
-              <Grid item sm={12} md={6}>
-                <ItemDetails personId={this.state.selectedPerson}></ItemDetails>
-              </Grid>
-            </Grid> */}
+            <PersonDetails itemId={11}/>
+            <PlanetDetails itemId={11}/>
+            <StarshipDetails itemId={11}/>
+            <PersonList>{({ name }) => <span>{name}</span>}</PersonList>
+            <PlanetList>{({ name }) => <span>{name}</span>}</PlanetList>
+            <StarshipList>{({ name }) => <span>{name}</span>}</StarshipList>
           </ErrorBoundry>
         </Container>
       </div>

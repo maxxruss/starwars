@@ -96,10 +96,10 @@ class ItemDetails extends Component {
   }
 
   render() {
-    if (!this.state.item) {
+    const {item, image} = this.state
+    if (!item) {
       return <span>Select from a list</span>;
     }
-    const { item, image } = this.state;
     // const { name, gender, birthYear, eyeColor } = item;
     const { classes } = this.props;
 
