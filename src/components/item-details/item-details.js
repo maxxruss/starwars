@@ -40,6 +40,7 @@ const useStyles = {
 };
 
 const Record = ({ item, label, field }) => {
+  
   const useStyles = {
     planetTitle: {
       color: "white"
@@ -55,7 +56,7 @@ const Record = ({ item, label, field }) => {
   return (
     <div>
       <ListItem className={useStyles.planetItemtext}>
-        {label} {item.field}
+        {label} - {item[field]}
       </ListItem>
       <Divider className={useStyles.divider} />
     </div>
@@ -89,7 +90,7 @@ class ItemDetails extends Component {
     }
     getData(itemId).then(item => {
       this.setState({ item, image: getImageUrl(item) });
-      // console.log(getImageUrl(item));
+      // console.log(item);
     });
 
     // console.log(personId)
