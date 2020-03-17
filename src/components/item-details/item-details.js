@@ -79,8 +79,8 @@ class ItemDetails extends Component {
     //Обязательно сравнить предыдущее состояние с настоящим
     if (
       this.props.itemId !== prevProps.itemId ||
-      this.props.getData !== prevProps.getImageUrl ||
-        this.props.getData !== prevProps.getImageUrl
+      this.props.getData !== prevProps.getData ||
+        this.props.getImageUrl !== prevProps.getImageUrl
     ) {
       this.updateItem();
     }
