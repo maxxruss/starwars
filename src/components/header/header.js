@@ -34,7 +34,7 @@ const useStyles = {
 
 class Header extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, onServiceChange } = this.props;
     return (
       <div className={classes.root}>
         <AppBar className={classes.board}>
@@ -46,6 +46,7 @@ class Header extends Component {
               <Button size="large" className={classes.button}>Peoples</Button>
               <Button size="large" className={classes.button}>Planets</Button>
               <Button size="large" className={classes.button}>Starships</Button>
+              <Button size="large" className={classes.button} onClick={onServiceChange}>Service</Button>
             </div>
           </Toolbar>
         </AppBar>

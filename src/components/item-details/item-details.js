@@ -40,7 +40,6 @@ const useStyles = {
 };
 
 const Record = ({ item, label, field }) => {
-  
   const useStyles = {
     planetTitle: {
       color: "white"
@@ -78,7 +77,11 @@ class ItemDetails extends Component {
 
   componentDidUpdate(prevProps) {
     //Обязательно сравнить предыдущее состояние с настоящим
-    if (this.props.itemId !== prevProps.itemId) {
+    if (
+      this.props.itemId !== prevProps.itemId ||
+      this.props.getData !== prevProps.getImageUrl ||
+        this.props.getData !== prevProps.getImageUrl
+    ) {
       this.updateItem();
     }
   }
@@ -97,7 +100,7 @@ class ItemDetails extends Component {
   }
 
   render() {
-    const {item, image} = this.state
+    const { item, image } = this.state;
     if (!item) {
       return <span>Select from a list</span>;
     }

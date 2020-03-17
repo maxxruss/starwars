@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-// import ItemDetails, { Record } from "../item-details";
-// import Row from "../row";
 import ErrorBoundry from "../error-boundry";
 import SwapiService from "../../services/swapi-service";
+import DummySwapiService from "../../services/dummy-swapi-service";
 import Header from "../header";
 import RandomPlanet from "../random-planet";
 import Error from "../error";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import {SwapiServiceProvider} from "../swapi-service-context"
+import { SwapiServiceProvider } from "../swapi-service-context";
 import {
   PersonList,
   PlanetList,
@@ -42,51 +41,46 @@ const useStyles = {
 
 class App extends Component {
   state = {
-    hasError: false
+    hasError: false,
+    swapiService: new DummySwapiService()
   };
 
-  swapiService = new SwapiService();
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service =
+        swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+      return {
+        swapiService: new Service()
+      };
+    });
+  };
 
   componentDidCatch() {
     this.setState({ hasError: true });
   }
+
   render() {
     if (this.state.hasError) {
       return <Error />;
     }
     const { classes } = this.props;
 
-    // const {
-    //   getPerson,
-    //   getStarship,
-    //   getPersonImage,
-    //   getStarshipImage
-    // } = this.swapiService;
-
-    // const personalDetail = (
-
-    // );
-
-    // const starshipDetail = (
-
-    // );
-
     return (
       <div className={classes.root}>
         <CssBaseline />
         <Container maxWidth="lg">
           <ErrorBoundry>
-            <SwapiServiceProvider value={this.swapiService}>
-            <Header />
-            <div className={classes.randomPlanetWrap}>
-              <RandomPlanet />
-            </div>
-            <PersonDetails itemId={11} />
-            <PlanetDetails itemId={11} />
-            <StarshipDetails itemId={11} />
-            <PersonList></PersonList>
-            <PlanetList></PlanetList>
-            <StarshipList></StarshipList>
+            <SwapiServiceProvider value={this.state.swapiService}>
+              <Header onServiceChange={this.onServiceChange} />
+              <div className={classes.randomPlanetWrap}>
+                <RandomPlanet />
+              </div>
+              <PersonDetails itemId={11} />
+              <PlanetDetails itemId={11} />
+              <StarshipDetails itemId={11} />
+              <PersonList></PersonList>
+              <PlanetList></PlanetList>
+              <StarshipList></StarshipList>
             </SwapiServiceProvider>
           </ErrorBoundry>
         </Container>
