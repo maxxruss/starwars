@@ -4,19 +4,13 @@ import ErrorBoundry from "../error-boundry";
 import SwapiService from "../../services/swapi-service";
 import DummySwapiService from "../../services/dummy-swapi-service";
 import Header from "../header";
+// import Row from "../row";
 import RandomPlanet from "../random-planet";
+import { PeoplePage, PlanetsPage, StarshipsPage } from "../pages";
 import Error from "../error";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { SwapiServiceProvider } from "../swapi-service-context";
-import {
-  PersonList,
-  PlanetList,
-  StarshipList,
-  PersonDetails,
-  PlanetDetails,
-  StarshipDetails
-} from "../sw-components";
 
 const useStyles = {
   root: {
@@ -42,7 +36,7 @@ const useStyles = {
 class App extends Component {
   state = {
     hasError: false,
-    swapiService: new DummySwapiService()
+    swapiService: new SwapiService()
   };
 
   onServiceChange = () => {
@@ -75,12 +69,9 @@ class App extends Component {
               <div className={classes.randomPlanetWrap}>
                 <RandomPlanet />
               </div>
-              <PersonDetails itemId={11} />
-              <PlanetDetails itemId={11} />
-              <StarshipDetails itemId={11} />
-              <PersonList></PersonList>
-              <PlanetList></PlanetList>
-              <StarshipList></StarshipList>
+              <PeoplePage />
+              <PlanetsPage />
+              <StarshipsPage />
             </SwapiServiceProvider>
           </ErrorBoundry>
         </Container>
