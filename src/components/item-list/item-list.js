@@ -17,8 +17,9 @@ const useStyles = makeStyles({
   }
 });
 
+
 const Itemlist = props => {
-  const classes = useStyles(props);
+  const classes = useStyles();
   const { data, onItemSelected, children: renderLabel } = props;
 
   const items = data.map(item => {
@@ -40,6 +41,11 @@ const Itemlist = props => {
   });
 
   return <div className={classes.root}>{items}</div>;
+};
+
+//свойства по умолчанию для функции или класса
+Itemlist.defaultProps = {
+  onItemSelected: () => {}
 };
 
 export default Itemlist;

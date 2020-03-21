@@ -40,6 +40,23 @@ const useStyles = {
 };
 
 class RandomPlanet extends Component {
+  //Значение по умолчанию в классе
+  static defaultProps = {
+    updateInterval: 10000
+  };
+
+  //Проверка на типы переменных, внутри вызывается функция-валидатор
+  static propTypes = {
+    updateInterval: (props, propName, componentName) => {
+      const value = props[propName];
+      if (typeof value == 'number' && !isNaN(value)) {
+        return null;
+      }
+      //Выбрасываем ошибку в консоль
+      return new TypeError(`${componentName}: ${propName} must be a number`)
+    }
+  };
+
   swapiService = new SwapiService();
 
   state = {
@@ -49,10 +66,11 @@ class RandomPlanet extends Component {
   };
 
   componentDidMount() {
+    const { updateInterval } = this.props;
     this.updatePlanet();
     this.interval = setInterval(() => {
       this.updatePlanet();
-    }, 10000);
+    }, updateInterval);
   }
 
   componentWillUnmount() {

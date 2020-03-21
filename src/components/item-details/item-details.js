@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import SwapiService from "../../services/swapi-service";
+//компонент стилей высшего порядка
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 
-const useStyles = {
+const styles = {
   root: {
     display: "flex",
     backgroundColor: "#1c1e22",
@@ -39,29 +40,19 @@ const useStyles = {
   }
 };
 
-const Record = ({ item, label, field }) => {
-  const useStyles = {
-    planetTitle: {
-      color: "white"
-    },
-    planetItemtext: {
-      color: "white"
-    },
-    divider: {
-      backgroundColor: "grey"
-    }
-  };
-
+const RecordWithoutStyle = ({ item, label, field, classes }) => {
   return (
     <div>
-      <ListItem className={useStyles.planetItemtext}>
+      <ListItem className={classes.planetItemtext}>
         {label} - {item[field]}
       </ListItem>
-      <Divider className={useStyles.divider} />
+      <Divider className={classes.divider} />
     </div>
   );
 };
 
+//применяем стили перед экспортом
+const Record = withStyles(styles)(RecordWithoutStyle);
 export { Record };
 
 class ItemDetails extends Component {
@@ -80,7 +71,7 @@ class ItemDetails extends Component {
     if (
       this.props.itemId !== prevProps.itemId ||
       this.props.getData !== prevProps.getData ||
-        this.props.getImageUrl !== prevProps.getImageUrl
+      this.props.getImageUrl !== prevProps.getImageUrl
     ) {
       this.updateItem();
     }
@@ -123,4 +114,4 @@ class ItemDetails extends Component {
   }
 }
 
-export default withStyles(useStyles)(ItemDetails);
+export default withStyles(styles)(ItemDetails);
