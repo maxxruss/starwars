@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -16,7 +17,6 @@ const useStyles = makeStyles({
     backgroundColor: "grey"
   }
 });
-
 
 const Itemlist = props => {
   const classes = useStyles();
@@ -46,6 +46,13 @@ const Itemlist = props => {
 //свойства по умолчанию для функции или класса
 Itemlist.defaultProps = {
   onItemSelected: () => {}
+};
+
+//Описание свойств, которые ожидает компонент и проверка на типы
+Itemlist.propTypes = {
+  onItemSelected: PropTypes.func,
+  data:PropTypes.arrayOf(PropTypes.object).isRequired,
+  children:PropTypes.func.isRequired
 };
 
 export default Itemlist;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -23,5 +24,10 @@ class Row extends Component {
     );
   }
 }
+
+Row.propTypes = {
+  left: PropTypes.node,
+  right: PropTypes.node
+};
 
 export default withStyles(useStyles)(Row);

@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+
+//Библиотека стандартных функций валидаторов
+import PropTypes from "prop-types"
+
 import Error from "../error";
 import Spinner from "../spinner";
 import SwapiService from "../../services/swapi-service";
@@ -46,15 +50,9 @@ class RandomPlanet extends Component {
   };
 
   //Проверка на типы переменных, внутри вызывается функция-валидатор
+  //Этому объекту нужно свойство updateInterval, если это не число то будет использоваться дефолтное значение
   static propTypes = {
-    updateInterval: (props, propName, componentName) => {
-      const value = props[propName];
-      if (typeof value == 'number' && !isNaN(value)) {
-        return null;
-      }
-      //Выбрасываем ошибку в консоль
-      return new TypeError(`${componentName}: ${propName} must be a number`)
-    }
+    updateInterval: PropTypes.number
   };
 
   swapiService = new SwapiService();
