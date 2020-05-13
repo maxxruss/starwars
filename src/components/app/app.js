@@ -11,17 +11,18 @@ import Error from "../error";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { SwapiServiceProvider } from "../swapi-service-context";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const useStyles = {
   root: {
     display: "flex",
     background: "#272b30",
     height: "100%",
-    color: "white"
+    color: "white",
   },
   headerWrap: {
     marginTop: "50px",
-    display: "flex"
+    display: "flex",
   },
   randomPlanetWrap: {
     backgroundColor: "#1c1e22",
@@ -29,14 +30,14 @@ const useStyles = {
     height: "250px",
     borderRadius: "10px",
     padding: "20px",
-    marginBottom: "20px"
-  }
+    marginBottom: "20px",
+  },
 };
 
 class App extends Component {
   state = {
     hasError: false,
-    swapiService: new SwapiService()
+    swapiService: new SwapiService(),
   };
 
   onServiceChange = () => {
@@ -44,7 +45,7 @@ class App extends Component {
       const Service =
         swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
       return {
-        swapiService: new Service()
+        swapiService: new Service(),
       };
     });
   };
@@ -65,13 +66,21 @@ class App extends Component {
         <Container maxWidth="lg">
           <ErrorBoundry>
             <SwapiServiceProvider value={this.state.swapiService}>
-              <Header onServiceChange={this.onServiceChange} />
-              <div className={classes.randomPlanetWrap}>
-                <RandomPlanet />
-              </div>
-              <PeoplePage />
-              <PlanetsPage />
-              <StarshipsPage />
+              <Router>
+                <Header onServiceChange={this.onServiceChange} />
+                <div className={classes.randomPlanetWrap}>
+                  <RandomPlanet />
+                </div>
+                <Route
+                  path="/"
+                  render={() => <h2>Welkome to StarDB</h2>}
+                  exact
+                ></Route>
+                <Route path="/people" render={() => <h2>People</h2>} exact></Route>
+                <Route path='/people' component={PeoplePage}></Route>
+                <Route path='/planets' component={PlanetsPage}></Route>
+                <Route path='/starships' component={StarshipsPage}></Route>               
+              </Router>
             </SwapiServiceProvider>
           </ErrorBoundry>
         </Container>

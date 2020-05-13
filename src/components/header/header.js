@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 // import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
+import { Link } from 'react-router-dom';
 
 const useStyles = {
   root: {
@@ -40,12 +41,14 @@ class Header extends Component {
         <AppBar className={classes.board}>
           <Toolbar>
             <Typography variant="h3" className={classes.title}>
-              Star DB
+            <Link to='/'>Star DB</Link>             
             </Typography>
             <div className={classes.buttonWrap}>
-              <Button size="large" className={classes.button}>Peoples</Button>
-              <Button size="large" className={classes.button}>Planets</Button>
-              <Button size="large" className={classes.button}>Starships</Button>
+              <ul>
+                <li><Link to='/people'>Peoples</Link></li>
+                <li><Link to='/planets'>Planets</Link></li>
+                <li><Link to='/starships'>Starships</Link></li>                
+              </ul>             
               <Button size="large" className={classes.button} onClick={onServiceChange}>Service</Button>
             </div>
           </Toolbar>

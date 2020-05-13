@@ -1,7 +1,7 @@
 // fetch('https://swapi.co/api/people/1').then((res)=> {console.log(res)})
 
 export default class SwapiService {
-  _baseApi = "https://swapi.co/api";
+  _baseApi = "https://swapi.dev/api";
   _imageBase = "https://starwars-visualguide.com/assets/img";
 
   getResponse = async url => {
