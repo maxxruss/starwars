@@ -45,9 +45,9 @@ class Header extends Component {
             </Typography>
             <div className={classes.buttonWrap}>
               <ul>
-                <li><Link to='/people'>Peoples</Link></li>
-                <li><Link to='/planets'>Planets</Link></li>
-                <li><Link to='/starships'>Starships</Link></li>                
+                <li><Link to='/people/'>Peoples</Link></li>
+                <li><Link to='/planets/'>Planets</Link></li>
+                <li><Link to='/starships/'>Starships</Link></li>                
               </ul>             
               <Button size="large" className={classes.button} onClick={onServiceChange}>Service</Button>
             </div>

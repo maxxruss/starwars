@@ -12,6 +12,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { SwapiServiceProvider } from "../swapi-service-context";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { StarshipDetails } from "../sw-components";
 
 const useStyles = {
   root: {
@@ -73,13 +74,28 @@ class App extends Component {
                 </div>
                 <Route
                   path="/"
-                  render={() => <h2>Welkome to StarDB</h2>}
+                  render={() => <h2>Welсome to StarDB</h2>}
                   exact
                 ></Route>
-                <Route path="/people" render={() => <h2>People</h2>} exact></Route>
-                <Route path='/people' component={PeoplePage}></Route>
-                <Route path='/planets' component={PlanetsPage}></Route>
-                <Route path='/starships' component={StarshipsPage}></Route>               
+                <Route
+                  path="/people"
+                  render={() => <h2>People</h2>}
+                  exact
+                ></Route>
+                <Route path="/people/:id?" component={PeoplePage}></Route>
+                <Route path="/planets" component={PlanetsPage}></Route>
+                <Route
+                  path="/starships"
+                  exact
+                  component={StarshipsPage}
+                ></Route>
+                <Route
+                  path="/starships/:id"
+                  render={({ match}) => {
+                    const {id} = match.params
+                    return <StarshipDetails itemId={id} />;
+                  }}
+                ></Route>
               </Router>
             </SwapiServiceProvider>
           </ErrorBoundry>
