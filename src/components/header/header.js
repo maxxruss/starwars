@@ -48,6 +48,8 @@ class Header extends Component {
                 <li><Link to='/people/'>Peoples</Link></li>
                 <li><Link to='/planets/'>Planets</Link></li>
                 <li><Link to='/starships/'>Starships</Link></li>                
+                <li><Link to='/login'>Login</Link></li>                
+                <li><Link to='/secret'>Secret</Link></li>                
               </ul>             
               <Button size="large" className={classes.button} onClick={onServiceChange}>Service</Button>
             </div>
