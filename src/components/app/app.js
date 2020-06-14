@@ -17,7 +17,7 @@ import Error from "../error";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { SwapiServiceProvider } from "../swapi-service-context";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { StarshipDetails } from "../sw-components";
 
 const useStyles = {
@@ -73,7 +73,7 @@ class App extends Component {
       return <Error />;
     }
     const { classes } = this.props;
-    const {isLoggedIn} = this.state
+    const { isLoggedIn } = this.state;
 
     return (
       <div className={classes.root}>
@@ -86,37 +86,46 @@ class App extends Component {
                 <div className={classes.randomPlanetWrap}>
                   <RandomPlanet />
                 </div>
-                <Route
-                  path="/"
-                  render={() => <h2>Welсome to StarDB</h2>}
-                  exact
-                ></Route>
-                <Route
-                  path="/people"
-                  render={() => <h2>People</h2>}
-                  exact
-                ></Route>
-                <Route path="/people/:id" component={PeoplePage}></Route>
-                <Route path="/planets" component={PlanetsPage}></Route>
-                <Route
-                  path="/starships"
-                  exact
-                  component={StarshipsPage}
-                ></Route>
-                <Route
-                  path="/starships/:id"
-                  render={({ match }) => {
-                    const { id } = match.params;
-                    return <StarshipDetails itemId={id} />;
-                  }}
-                ></Route>
-                <Route
-                  path="/login"
-                  render={() => (
-                    <LoginPage isLoggedIn={isLoggedIn} onLogin={this.onLogin} />
-                  )}
-                ></Route>
-                <Route path="/secret" render={() => <SecretPage isLoggedIn={isLoggedIn} />}></Route>
+                <Switch>
+                  <Route
+                    path="/"
+                    render={() => <h2>Welсome to StarDB</h2>}
+                    exact
+                  ></Route>
+                  <Route
+                    path="/people"
+                    render={() => <h2>People</h2>}
+                    exact
+                  ></Route>
+                  <Route path="/people/:id" component={PeoplePage}></Route>
+                  <Route path="/planets" component={PlanetsPage}></Route>
+                  <Route
+                    path="/starships"
+                    exact
+                    component={StarshipsPage}
+                  ></Route>
+                  <Route
+                    path="/starships/:id"
+                    render={({ match }) => {
+                      const { id } = match.params;
+                      return <StarshipDetails itemId={id} />;
+                    }}
+                  ></Route>
+                  <Route
+                    path="/login"
+                    render={() => (
+                      <LoginPage
+                        isLoggedIn={isLoggedIn}
+                        onLogin={this.onLogin}
+                      />
+                    )}
+                  ></Route>
+                  <Route
+                    path="/secret"
+                    render={() => <SecretPage isLoggedIn={isLoggedIn} />}
+                  ></Route>
+                  <Route render={() => <h1>Page not found</h1>}></Route>
+                </Switch>
               </Router>
             </SwapiServiceProvider>
           </ErrorBoundry>
